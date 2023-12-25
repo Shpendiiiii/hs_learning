@@ -36,3 +36,6 @@ pM :: Bool -> String
 pM hasBags = case hasBags of 
   False -> "There is no fee"
   True -> "There is a $50 fee"
+
+--list comp
+lst = [ x * 2 | x <- [1..20] ]
