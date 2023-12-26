@@ -1,13 +1,24 @@
+
 module Main where
+import Data.Char (ord)
+import Data.Word
 
 main :: IO ()
 main = do
   putStrLn "Works" 
   putStrLn $ show e
+  print e
   putStrLn $ show (square 3)
   showResult (square 3)
 
+unicodeValue2 :: Int
+unicodeValue2 = ord '✨' 
 
+--print character from decimal code
+printChar = toEnum 1114111 :: Char
+pp = print [printChar]
+
+--anon func
 e = (\n n1 -> n + n1) 1 1
 
 square :: Double -> Double
@@ -76,3 +87,48 @@ showRes = removeOdd xxs
 triangles = [ (a, b, c) | c <- [1..10], b <- [1..c], a <- [1..b], a^2 + b^2 == c^2, a + b + c == 24]
 
 factorial n = product [1..n]
+
+--pattern matching
+
+lucky :: (Integral a) => a -> String
+lucky 7 = "Lucky number 7";
+lucky x = "Sorry, out of luck, pal!" 
+
+len_ :: (Num b) => [a] -> b
+len_ [] = 0
+len_ (_:xs) = 1 + len_ xs
+
+len' :: [a] -> Int
+len' xs = sum [1 | _ <- xs]
+
+--where and pattern matching
+densityTell mass volume 
+  | density < 1.2 = "You can float in the air"
+  | density <= 1000.0 = "You will swim"
+  | otherwise = "You are going to sink"
+  where density = mass / volume
+
+showMe = print (densityTell 400 1)
+
+--where keyword usage
+initials first last = [f] ++ ". " ++ [l] ++ "."
+  where (f:_) = first
+        (l:_) = last
+
+calcDensities xs = [density m v | (m,v) <- xs]
+  where density mass volume = mass / volume
+
+--same function but with the let keyword
+calcDensities_ xs = [density | (m, v) <- xs, let density = m / v, density < 1.2]
+
+--pattern matching
+head' xs = case xs of 
+    [] -> error "No head for empty lists"
+    (x:_) -> x
+
+describeList xs = "The list is " ++ what xs  
+  where what [] = "empty."  
+        what [x] = "a singleton list."  
+        what xs = "a longer list."
+
+multThree x y z = x * y * z  
